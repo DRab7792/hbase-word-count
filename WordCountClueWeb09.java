@@ -70,10 +70,11 @@ public class WordCountClueWeb09 {
 
     		//Form immutable bytes writable
     		String str = word.toString();
-    		Put data = new Put(Constants.CF_FREQUENCIES_BYTES, Constants.QUAL_COUNT_BYTES, Bytes.toBytes(totalFreq));
+    		Put data = new Put(Bytes.toBytes(str));
+    		data.add(Constants.CF_FREQUENCIES_BYTES, Constants.QUAL_COUNT_BYTES, Bytes.toBytes(totalFreq));
 
 			//Write to context
-			context.write(new ImmutableBytesWritable(Bytes.toBytes(str)), data);
+			context.write(new ImmutableBytesWritable(), data);
         }
     }
     
