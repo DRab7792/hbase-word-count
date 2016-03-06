@@ -40,7 +40,7 @@ public class WordCountClueWeb09 {
 			HashMap<String, Long> freq = getWordFreq(content);
 	
 			//Loop through hashmap with iterator
-			for (HashMap.Entry<String, Long> entry : freq.entrySet()) {
+			for (Map.Entry<String, Long> entry : freq.entrySet()) {
 				//Get the key and value
 				String key = entry.getKey();
 				Long curFreq = entry.getValue();
