@@ -37,7 +37,16 @@ public class WordCountClueWeb09 {
 			// TODO: write your implementation for counting words in each row, and generating a <word, count> pair
 			// Hint: use the "getWordFreq" function to count the frequencies of words in content
 
-			
+			HashMap<String, Long> freq = getWordFreq(content);
+	
+			//Loop through hashmap with iterator
+			for (HashMap.Entry<String, Long> entry : freq.entrySet()) {
+				//Get the key and value
+				String key = entry.getKey();
+				Long curFreq = entry.getValue();
+				//Write to context
+				context.write(new Text(key), new LongWritable(curFreq));
+			}
 
 		}
 	}
@@ -53,7 +62,19 @@ public class WordCountClueWeb09 {
             // Check iu.pti.hbaseapp.Constants for the constant values to use.
 
     		long totalFreq = 0;
-			
+
+    		//Iterate through the values
+    		for (LongWritable cur : freqs){
+    			totalFreq += cur.get();
+    		}
+
+    		//Form immutable bytes writable
+    		String str = word.toString();
+    		Put data = new Put(Bytes.toBytes(str));
+			data.add(Constants.CF_FREQUENCIES_BYTES, Constants.QUAL_COUNT_BYTES, Bytes.toBytes(totalFreq));
+
+			//Write to context
+			context.write(null, data);
         }
     }
     
